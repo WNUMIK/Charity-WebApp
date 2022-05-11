@@ -1,10 +1,58 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin, Group
 from django.db import models
 
 from . import enums
 
 
 # Create your models here.
+class CustomAccountManager(BaseUserManager):
+    def create_user(self, email, name, surname, password=None):
+        if not email:
+            raise ValueError('Users must provide the Email.')
+
+        user = self.model(
+            email=self.normalize_email(email),
+            name=name,
+            surname=surname,
+        )
+
+        user.set_password(password)
+        user.is_active = True
+        user.save(using=self._db)
+        user_group = Group.objects.get(name='regular')
+        user.groups.add(user_group)
+        return user
+
+    def create_superuser(self, email, name, surname, password=None):
+        user = self.create_user(email=email, name=name, surname=surname, password=password)
+
+        user.is_admin = True
+        user.is_staff = True
+        user.is_active = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+
+
+class Account(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(max_length=60, unique=True, verbose_name='email')
+    name = models.CharField(max_length=30)
+    surname = models.CharField(max_length=30)
+    date_join = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
+    last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
+
+    objects = CustomAccountManager()
+
+    def __str__(self):
+        return self.email
 
 
 class Category(models.Model):
@@ -29,4 +77,4 @@ class Donation(models.Model):
     pick_up_date = models.DateField()
     pick_up_time = models.TimeField()
     pick_up_comment = models.TextField(max_length=300)
-    user = models.ForeignKey('User', default=Null, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), related_name='users', on_delete=models.CASCADE)
