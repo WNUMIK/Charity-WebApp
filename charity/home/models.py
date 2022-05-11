@@ -21,8 +21,8 @@ class CustomAccountManager(BaseUserManager):
         user.set_password(password)
         user.is_active = True
         user.save(using=self._db)
-        user_group = Group.objects.get(name='regular')
-        user.groups.add(user_group)
+        # user_group = Group.objects.get(name='regular')
+        # user.groups.add(user_group)
         return user
 
     def create_superuser(self, email, name, surname, password=None):
