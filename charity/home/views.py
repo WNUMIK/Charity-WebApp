@@ -5,10 +5,11 @@ from django.db.models import Sum
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from django.urls import reverse
-from django.views.generic import TemplateView
+from django.urls import reverse, reverse_lazy
+from django.views import View
+from django.views.generic import TemplateView, FormView
 
-from . import forms
+from .forms import DonationForm, RegistrationForm, LoginForm
 from .models import Donation, Institution, Category
 
 
@@ -29,7 +30,7 @@ class HomeView(TemplateView):
 
 def login_view(request):
     if request.method == 'POST':
-        form = forms.LoginForm(request, request.POST)
+        form = LoginForm(request, request.POST)
 
         if form.is_valid():
             username = form.cleaned_data.get('username')
@@ -43,7 +44,7 @@ def login_view(request):
         else:
             return redirect(reverse('home:register'))
     else:
-        form = forms.LoginForm()
+        form = LoginForm()
 
     return render(request, 'home/login.html', {'form': form})
 
@@ -54,7 +55,7 @@ def logout_user(request):
 
 
 def registration_view(request):
-    form = forms.RegistrationForm(request.POST or None, request.FILES or None)
+    form = RegistrationForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
             user = form.save(commit=False)
@@ -66,25 +67,26 @@ def registration_view(request):
     return render(request, 'home/register.html', {'form': form})
 
 
-class AddDonation(TemplateView):
-    template_name = 'home/donation.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-
-        ctx['category'] = Category.objects.all()
-        ctx['institution'] = Institution.objects.all()
-
-        return ctx
-
-    def post(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
+def donation_view(request):
+    if request.method == 'POST':
         donation = Donation()
-        form = forms.DonationForm(request.POST)
-        if request.method == 'POST':
-            if form.is_valid():
-                donation = form.save(commit=False)
-                donation.save()
-            return redirect(reverse('home:donation-confirmation'))
-        return render(reverse('home:donation'))
+        form = DonationForm(request, request.POST)
+        if form.is_valid():
+            donation.quantity = form.cleaned_data['bags']
+            donation.address = form.cleaned_data['address']
+            donation.phone_number = form.cleaned_data['phone']
+            donation.city = form.cleaned_data['city']
+            donation.zip_code = form.cleaned_data['postcode']
+            donation.pick_up_date = form.cleaned_data['data']
+            donation.pick_up_time = form.cleaned_data['time']
+            donation.pick_up_comment = form.cleaned_data['more_info']
+            donation.save()
+        return redirect(reverse_lazy('home:donation-confirmation'))
+    else:
+        form = DonationForm()
+    ctx = {'category': Category.objects.all(), 'institution': Institution.objects.all(), "form": form}
+    return render(request, "home/donation.html", ctx)
 
+
+class ConfirmDonation(TemplateView):
+    template_name = 'home/form-confirmation.html'

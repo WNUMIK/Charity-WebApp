@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 
+from .models import Donation
+
 
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': "Hasło"}))
@@ -46,13 +48,17 @@ class LoginForm(AuthenticationForm):
 
 
 class DonationForm(forms.ModelForm):
-    address = forms.CharField(widget=forms.TextInput)
-    city = forms.CharField(widget=forms.TextInput)
-    zip_code = forms.CharField(widget=forms.TextInput)
-    phone_number = forms.NumberInput
-    pick_up_date = forms.DateField
-    pick_up_time = forms.TimeField
-    pick_up_comment = forms.Textarea
+    quantity = forms.CharField(widget=forms.NumberInput(attrs={'type': 'number', 'name': 'bags'}))
+    address = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'address'}))
+    city = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'city'}))
+    zip_code = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'postcode'}))
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'type': 'phone', 'id': 'phone'}))
+    pick_up_date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date', 'id': 'data'}))
+    pick_up_time = forms.CharField(widget=forms.TextInput(attrs={'type': 'time', 'id': 'time'}))
+    pick_up_comment = forms.CharField(widget=forms.Textarea(attrs={'type': 'textarea', 'id': 'info'}))
 
     class Meta:
-        fields = ('address', 'city', 'zip_code', 'phone_number', 'pick_up_date', 'pick_up_time', 'pick_up_comment')
+        model = Donation
+        fields = (
+            'quantity', 'address', 'city', 'zip_code', 'phone_number', 'pick_up_date', 'pick_up_time',
+            'pick_up_comment')
