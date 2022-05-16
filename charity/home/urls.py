@@ -10,6 +10,8 @@ urlpatterns = [
     path('login', views.login_view, name='login'),
     path('logout', views.logout_user, name='logout'),
     path('register', views.registration_view, name='register'),
-    path('donation', views.donation_view, name='donation'),
-    path('confirmation', views.ConfirmDonation.as_view(), name='donation-confirmation')
+    path('donation', views.AddDonation.as_view(), name='donation'),
+    path('confirmation', views.DonationConfirmation.as_view(), name='confirmation'),
+    path('profile', views.UserView.as_view(), name='profile'),
+    path('get_institutions_by_category/', views.get_institutions_by_category, name='get_institutions_by_category'),
 ]

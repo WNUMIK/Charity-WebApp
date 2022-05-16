@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <div class="slogan container container--90 center">
+        <div class="slogan--item">
+            <h1> Name: {{ user.name }}</h1>
+            <h1> Surname: {{ user.surname }}</h1>
+            <h1> Email: {{ user.email }}</h1>
+            {% for donat in donations %}
+                <h1>Liczba przekazanych worków: {{ donat.quantity }}<br> Obdarowana organizacja: {{ donat.institution }}<br>
+                    Kategorie darów: {% for cat in donat.categories.all %}{{ cat.name }}, {% endfor %}<br>Termin
+                    odbioru: {{ donat.pick_up_date }} o godzinie {{ donat.pick_up_time }}<br>
+                </h1>
+            {% endfor %}
+        </div>
+        </div>
+{% endblock %}

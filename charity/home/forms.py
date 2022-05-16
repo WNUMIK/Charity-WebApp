@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
 
 from .models import Donation
@@ -47,18 +47,21 @@ class LoginForm(AuthenticationForm):
         fields = ('username', 'password')
 
 
-class DonationForm(forms.ModelForm):
-    quantity = forms.CharField(widget=forms.NumberInput(attrs={'type': 'number', 'name': 'bags'}))
-    address = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'address'}))
-    city = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'city'}))
-    zip_code = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'postcode'}))
-    phone_number = forms.CharField(widget=forms.TextInput(attrs={'type': 'phone', 'id': 'phone'}))
-    pick_up_date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date', 'id': 'data'}))
-    pick_up_time = forms.CharField(widget=forms.TextInput(attrs={'type': 'time', 'id': 'time'}))
-    pick_up_comment = forms.CharField(widget=forms.Textarea(attrs={'type': 'textarea', 'id': 'info'}))
-
-    class Meta:
-        model = Donation
-        fields = (
-            'quantity', 'address', 'city', 'zip_code', 'phone_number', 'pick_up_date', 'pick_up_time',
-            'pick_up_comment')
+class MyUserCreation(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        fields = ('username', 'first_name', 'last_name')
+# class DonationForm(forms.ModelForm):
+#     quantity = forms.CharField(widget=forms.NumberInput(attrs={'type': 'number', 'name': 'bags', 'id': 'bags'}))
+#     address = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'address', 'name': 'address'}))
+#     city = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'city', 'name': 'city'}))
+#     zip_code = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'postcode', 'name': 'postcode'}))
+#     phone_number = forms.CharField(widget=forms.TextInput(attrs={'type': 'phone', 'id': 'phone', 'name': 'phone'}))
+#     pick_up_date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date', 'id': 'data', 'name': 'data'}))
+#     pick_up_time = forms.CharField(widget=forms.TextInput(attrs={'type': 'time', 'id': 'time', 'name': 'time'}))
+#     pick_up_comment = forms.CharField(widget=forms.Textarea(attrs={'type': 'textarea', 'id': 'info', 'name': 'more_info'}))
+#
+#     class Meta:
+#         model = Donation
+#         fields = (
+#             'quantity', 'address', 'city', 'zip_code', 'phone_number', 'pick_up_date', 'pick_up_time',
+#             'pick_up_comment')

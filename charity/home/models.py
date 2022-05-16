@@ -58,18 +58,24 @@ class Account(AbstractBaseUser, PermissionsMixin):
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Institution(models.Model):
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField()
     type = models.IntegerField(choices=enums.STATUS, default=0)
-    categories = models.ManyToManyField('Category', related_name='categories_institution')
+    categories = models.ManyToManyField(Category)
+
+    def __str__(self):
+        return self.name
 
 
 class Donation(models.Model):
     quantity = models.PositiveIntegerField()
-    categories = models.ManyToManyField('Category', related_name='donation_categories')
-    institution = models.ForeignKey('Institution', related_name='institution_donation', on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category)
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     address = models.CharField(max_length=500)
     phone_number = models.PositiveIntegerField()
     city = models.CharField(max_length=200)
@@ -77,4 +83,4 @@ class Donation(models.Model):
     pick_up_date = models.DateField()
     pick_up_time = models.TimeField()
     pick_up_comment = models.TextField(max_length=300)
-    user = models.ForeignKey(get_user_model(), related_name='users', on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
