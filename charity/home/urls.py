@@ -14,4 +14,5 @@ urlpatterns = [
     path('confirmation', views.DonationConfirmation.as_view(), name='confirmation'),
     path('profile', views.UserView.as_view(), name='profile'),
     path('get_institutions_by_category/', api.get_institutions_by_category, name='get_institutions_by_category'),
+    path('crud', views.AdminView.as_view(), name='crud'),
 ]

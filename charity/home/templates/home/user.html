@@ -2,17 +2,22 @@
 {% load static %}
 
 {% block header %}
-    <div class="slogan container container--90 center">
+    <div class="container">
         <div class="slogan--item">
             <h1> Name: {{ user.name }}</h1>
             <h1> Surname: {{ user.surname }}</h1>
             <h1> Email: {{ user.email }}</h1>
-            {% for donat in donations %}
-                <h1>Liczba przekazanych worków: {{ donat.quantity }}<br> Obdarowana organizacja: {{ donat.institution }}<br>
-                    Kategorie darów: {% for cat in donat.categories.all %}{{ cat.name }}, {% endfor %}<br>Termin
-                    odbioru: {{ donat.pick_up_date }} o godzinie {{ donat.pick_up_time }}<br>
-                </h1>
+        </div>
+        {% for donat in donations %}
+        <div class="dropdown">
+            <button class="title">Obdarowana organizacja: {{ donat.institution }}</button>
+                <div class="dropdown-content">
+                    <h1>Liczba przekazanych worków: {{ donat.quantity }}</h1>
+                    <h1>Kategorie darów: {% for cat in donat.categories.all %}{{ cat.name }}, {% endfor %}</h1>
+                    <h1>Termin odbioru: {{ donat.pick_up_date }} o godzinie {{ donat.pick_up_time }}</h1>
+                </div>
+                </div>
             {% endfor %}
-        </div>
-        </div>
+
+    </div>
 {% endblock %}

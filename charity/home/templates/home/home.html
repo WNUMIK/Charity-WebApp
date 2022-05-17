@@ -91,9 +91,9 @@
                             <div class="subtitle">Cel i misja: {{ fund.description }}.</div>
                         </div>
                         <div class="col">
-                            {% for f in fund.category.all %}
+                            {% for f in fund.categories.all %}
                                 <div class="text">
-                                    {{ f }},
+                                    {{ f }}
                                 </div>
                             {% endfor %}
                         </div>
@@ -125,7 +125,9 @@
                         </div>
 
                         <div class="col">
-                            <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                            {% for o in org.categories.all %}
+                            <div class="text">{{ o}}</div>
+                                {% endfor %}
                         </div>
 
                     </li>
@@ -152,11 +154,13 @@
                     <li>
                         <div class="col">
                             <div class="title">{{ loc.name }}</div>
-                            <div class="subtitle">{{ loc.descritption }}</div>
+                            <div class="subtitle">{{ loc.description }}</div>
                         </div>
 
                         <div class="col">
-                            <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                            {% for l in loc.categories.all %}
+                            <div class="text">{{ l }}</div>
+                                {% endfor %}
                         </div>
                     </li>
                 {% endfor %}

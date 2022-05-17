@@ -12,7 +12,7 @@ from django.views import View
 from django.views.generic import TemplateView, FormView
 
 from .forms import RegistrationForm, LoginForm
-from .models import Donation, Institution, Category
+from .models import Donation, Institution, Category, Account
 
 
 class HomeView(TemplateView):
@@ -84,8 +84,6 @@ def registration_view(request):
             user = form.save(commit=False)
             user.is_active = True
             user.save()
-            # regular_group = Group.objects.get(name='regular')
-            # user.groups.add(regular_group)
         return redirect(reverse('home:login'))
     return render(request, 'home/register.html', {'form': form})
 
@@ -129,20 +127,6 @@ class DonationConfirmation(LoginRequiredMixin, View):
         donation.categories.set(categories)
         return render(request, 'home/form-confirmation.html')
 
-# @login_required
-# def donation_view(request):
-#     form = DonationForm(request.POST or None)
-#     if request.method == 'POST':
-#         if form.is_valid():
-#             form.save()
-#         return redirect(reverse_lazy('home:confirmation'))
-#     ctx = {'category': Category.objects.all(), 'institution': Institution.objects.all(), "form": form}
-#     return render(request, "home/donation.html", ctx)
-
-
-# @login_required
-# def confirmation_view(request):
-#     return render(request, 'home/form-confirmation.html')
 
 class UserView(LoginRequiredMixin, View):
     def get(self, request):
@@ -151,10 +135,8 @@ class UserView(LoginRequiredMixin, View):
         return render(request, 'home/user.html', {'user': user, 'donations': donations})
 
 
-# def get_institutions_by_category(request):
-#     categories_ids = request.GET.getlist('categories_ids')
-#     if categories_ids is not None:
-#         institutions = Institution.objects.filter(categories__in=categories_ids).distinct()
-#     else:
-#         institutions = Institution.objects.all()
-#     return render(request, "home/api_institutions.html", {'institutions': institutions})
+class AdminView(LoginRequiredMixin, View):
+    def get(self, request):
+        users = Account.objects.order_by('id')
+        count = Account.objects.all().count()
+        return render(request, 'home/crud-admin.html', {'users': users, 'count': count})
