@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 
 from .models import Donation
@@ -47,9 +47,6 @@ class LoginForm(AuthenticationForm):
         fields = ('username', 'password')
 
 
-class MyUserCreation(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        fields = ('username', 'first_name', 'last_name')
 # class DonationForm(forms.ModelForm):
 #     quantity = forms.CharField(widget=forms.NumberInput(attrs={'type': 'number', 'name': 'bags', 'id': 'bags'}))
 #     address = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'id': 'address', 'name': 'address'}))

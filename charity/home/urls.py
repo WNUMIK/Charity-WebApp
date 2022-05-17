@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 
-from . import views
+from . import views, api
 
 app_name = 'home'
 
@@ -13,5 +13,5 @@ urlpatterns = [
     path('donation', views.AddDonation.as_view(), name='donation'),
     path('confirmation', views.DonationConfirmation.as_view(), name='confirmation'),
     path('profile', views.UserView.as_view(), name='profile'),
-    path('get_institutions_by_category/', views.get_institutions_by_category, name='get_institutions_by_category'),
+    path('get_institutions_by_category/', api.get_institutions_by_category, name='get_institutions_by_category'),
 ]

@@ -234,18 +234,24 @@ document.addEventListener("DOMContentLoaded", function () {
             this.$stepInstructions[0].parentElement.parentElement.hidden = this.currentStep >= 6;
             this.$step.parentElement.hidden = this.currentStep >= 6;
 
-            // TODO: get data from inputs and show them in summary
-            // let organization1 = document.querySelector('input[name="organization"]:checked').parentElement;
-            // let organization2 = organization1.getElementsByClassName("description")[0];
-            // document.getElementById('institutionIn')[0].innerText = organization2.getElementsByClassName("title")[0].innerHTML;
-            // document.getElementById('addressIn').innerText = document.getElementById('address').value;
-            // document.getElementById('cityIn').innerText = document.getElementById('city').value;
-            // document.getElementById('postcodeIn').innerText = document.getElementById('postcode').value;
-            // document.getElementById('phoneIn').innerText = document.getElementById('phone').value;
-            // document.getElementById('dateIn').innerText = document.getElementById('data').value.toString();
-            // document.getElementById('timeIn').innerText = document.getElementById('time').value.toString();
-            // document.getElementById('infoIn').innerText = document.getElementById('info').value;
-            // document.getElementById('bagsIn').innerText = document.getElementById('bags').value;
+             let summarybutton = document.getElementsByName('button-to-summary')[0];
+                  summarybutton.addEventListener('click', function() {
+                  let bags = document.getElementsByName('bags')[0].value;
+                  let cloth = document.querySelector('input[name="categories"]:checked').parentElement;
+                  let clothes = cloth.getElementsByClassName("description")[0].innerHTML;
+                  document.getElementsByName('bags-summary')[0].innerText = 'Worki ' + bags + ' sztuk, ' + clothes;
+                  let org = document.querySelector('input[name="organization"]:checked').parentElement;
+                  let organi = org.getElementsByClassName("description")[0];
+                  let organization = organi.getElementsByClassName("title")[0].innerHTML;
+                  document.getElementsByName('organization-summary')[0].innerText = 'Dla organizacji ' + organization;
+                  document.getElementById('addressIn').innerText = document.getElementById('address').value;
+                  document.getElementById('cityIn').innerText = document.getElementById('city').value;
+                  document.getElementById('postcodeIn').innerText = document.getElementById('postcode').value;
+                  document.getElementById('phoneIn').innerText = document.getElementById('phone').value;
+                  document.getElementById('dateIn').innerText = document.getElementById('data').value.toString();
+                  document.getElementById('timeIn').innerText = document.getElementById('time').value.toString();
+                  document.getElementById('infoIn').innerText = document.getElementById('info').value;
+                  });
         }
 
 
@@ -255,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
          * TODO: validation, send data to server
          */
         submit(e) {
-            // e.preventDefault();
+            // e.preventDefault(); <-- NASZUKAŁEM SIĘ TEGO @!@&!&$*@!
             this.currentStep++;
             this.updateForm();
         }
@@ -266,29 +272,11 @@ document.addEventListener("DOMContentLoaded", function () {
         new FormSteps(form);
     }
 
-    let summarybutton = document.getElementsByName('button-to-summary')[0];
-  summarybutton.addEventListener('click', function() {
-  let bags = document.getElementsByName('bags')[0].value;
-  let cloth = document.querySelector('input[name="categories"]:checked').parentElement;
-  let clothes = cloth.getElementsByClassName("description")[0].innerHTML;
-  document.getElementsByName('bags-summary')[0].innerText = 'Worki ' + bags + ' sztuk, ' + clothes;
-  let org = document.querySelector('input[name="organization"]:checked').parentElement;
-  let organi = org.getElementsByClassName("description")[0];
-  let organization = organi.getElementsByClassName("title")[0].innerHTML;
-  document.getElementsByName('organization-summary')[0].innerText = 'Dla organizacji ' + organization;
-  document.getElementById('addressIn').innerText = document.getElementById('address').value;
-  document.getElementById('cityIn').innerText = document.getElementById('city').value;
-  document.getElementById('postcodeIn').innerText = document.getElementById('postcode').value;
-  document.getElementById('phoneIn').innerText = document.getElementById('phone').value;
-  document.getElementById('dateIn').innerText = document.getElementById('data').value.toString();
-  document.getElementById('timeIn').innerText = document.getElementById('time').value.toString();
-  document.getElementById('infoIn').innerText = document.getElementById('info').value;
-  })
 });
 
-function show_id(event)
+    function show_id()
 {
-    var ids = get_checked_chexboxes();
+    var ids = checkbox_value();
     var params = new URLSearchParams();
     ids.forEach(id => params.append("categories_ids", id))
     var address = '/get_institutions_by_category?'+ params.toString();
@@ -297,7 +285,7 @@ function show_id(event)
         .then(data => document.getElementById("institutions").innerHTML = data);
 
 }
-function get_checked_chexboxes()
+function checkbox_value()
 {
     var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
     var ids = [];

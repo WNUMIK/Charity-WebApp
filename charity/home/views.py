@@ -11,7 +11,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, FormView
 
-from .forms import RegistrationForm, LoginForm, MyUserCreation
+from .forms import RegistrationForm, LoginForm
 from .models import Donation, Institution, Category
 
 
@@ -151,10 +151,10 @@ class UserView(LoginRequiredMixin, View):
         return render(request, 'home/user.html', {'user': user, 'donations': donations})
 
 
-def get_institutions_by_category(request):
-    categories_ids = request.GET.getlist('categories_ids')
-    if categories_ids is not None:
-        institutions = Institution.objects.filter(categories__in=categories_ids).distinct()
-    else:
-        institutions = Institution.objects.all()
-    return render(request, "home/api_institutions.html", {'institutions': institutions, 'form': MyUserCreation()})
+# def get_institutions_by_category(request):
+#     categories_ids = request.GET.getlist('categories_ids')
+#     if categories_ids is not None:
+#         institutions = Institution.objects.filter(categories__in=categories_ids).distinct()
+#     else:
+#         institutions = Institution.objects.all()
+#     return render(request, "home/api_institutions.html", {'institutions': institutions})
