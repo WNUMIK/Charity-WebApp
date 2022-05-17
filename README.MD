@@ -3,7 +3,8 @@
 ```
 
 # Charity
-
+Deployed on Heroku:
+[https://charitymw.herokuapp.com/](https://charitymw.herokuapp.com/)
 
 ## Celem projektu jest stworzenie miejsca, w którym każdy będzie mógł oddać niepotrzebne rzeczy zaufanym instytucjom.
 
