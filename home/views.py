@@ -12,7 +12,7 @@ from django.views import View
 from django.views.generic import TemplateView, FormView
 
 from .forms import RegistrationForm, LoginForm
-from .models import Donation, Institution, Category, Account
+from .models import Donation, Institution, Category, Account, Contact
 
 
 class HomeView(TemplateView):
@@ -140,3 +140,14 @@ class AdminView(LoginRequiredMixin, View):
         users = Account.objects.order_by('id')
         count = Account.objects.all().count()
         return render(request, 'home/crud-admin.html', {'users': users, 'count': count})
+
+
+class ContactView(View):
+    def post(self, request):
+        name = request.POST.get('name')
+        surname = request.POST.get('surname')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        Contact.objects.create(name=name, surname=surname, email=email, message=message)
+        return redirect(reverse('home:home'))

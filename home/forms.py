@@ -62,3 +62,4 @@ class LoginForm(AuthenticationForm):
 #         fields = (
 #             'quantity', 'address', 'city', 'zip_code', 'phone_number', 'pick_up_date', 'pick_up_time',
 #             'pick_up_comment')
+

@@ -71,6 +71,9 @@ class Institution(models.Model):
     def __str__(self):
         return self.name
 
+    def get_categories(self):
+        return "\n".join([c.name for c in self.categories.all()])
+
 
 class Donation(models.Model):
     quantity = models.PositiveIntegerField()
@@ -84,3 +87,13 @@ class Donation(models.Model):
     pick_up_time = models.TimeField()
     pick_up_comment = models.TextField(max_length=300)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=15)
+    surname = models.CharField(max_length=25)
+    email = models.EmailField()
+    message = models.TextField(max_length=255)
+
+    def __str__(self):
+        return self.email
