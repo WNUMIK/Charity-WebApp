@@ -35,3 +35,26 @@ Migrate Database:
 Run the web application locally:
 
 `python manage.py runserver`
+
+## Environment Variables
+To run this project, you will need to add the following environment variables to your .env file. You can also use file `.env-default`, put there your own data and rename it to `.env` than run command `source env/.env` in terminal to activate.
+
+`POSTGRES_USER=`
+
+`POSTGRES_PASSWORD=`
+
+`POSTGRES_DB=`
+
+`DATABASE_URL=`
+
+`DEBUG=`
+
+`SECRET_KEY=`
+
+`DJANGO_ALLOWED_HOSTS=`
+
+`DJANGO_SU_NAME=`
+
+`DJANGO_SU_EMAIL=`
+
+`DJANGO_SU_PASSWORD=`
