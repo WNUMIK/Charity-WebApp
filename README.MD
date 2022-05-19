@@ -66,3 +66,6 @@ To run this project, you will need to add the following environment variables to
 `DJANGO_SU_EMAIL=`
 
 `DJANGO_SU_PASSWORD=`
+
+## Author
+- [@k1wsatz](https://www.github.com/k1wsatz)
