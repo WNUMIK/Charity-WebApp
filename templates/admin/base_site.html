@@ -1,0 +1,11 @@
+{% extends 'admin/base.html' %}{% load static %}
+
+{% block branding %}
+    <h1 id="head">
+    <img src="{% static 'images/logo.svg' %}" width="35" height="35"/>
+        Charity Donation Admin Control Panel
+    </h1>
+{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'styles/adminstyle.css' %}"/>
+{% endblock %}
