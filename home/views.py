@@ -30,30 +30,13 @@ class HomeView(TemplateView):
         return ctx
 
 
-# class Login(View):
-#     def get(self, request):
-#         form = LoginForm(request, request.POST)
-#         return render(request, 'home/login.html', {'form': form})
-#
-#     def post(self, request):
-#         form = LoginForm(request, request.POST)
-#         if form.is_valid():
-#             username = form.cleaned_data.get('username')
-#             password = form.cleaned_data.get('password')
-#
-#             user = authenticate(email=username, password=password)
-#             if user is not None:
-#                 if user.is_active:
-#                     login(request, user)
-#                     return redirect(reverse('home:home'))
-#         else:
-#             return redirect(reverse('home:register'))
-
-
-def login_view(request):
-    if request.method == 'POST':
+class Login(View):
+    def get(self, request):
         form = LoginForm(request, request.POST)
+        return render(request, 'home/login.html', {'form': form})
 
+    def post(self, request):
+        form = LoginForm(request, request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -65,16 +48,12 @@ def login_view(request):
                     return redirect(reverse('home:home'))
         else:
             return redirect(reverse('home:register'))
-    else:
-        form = LoginForm()
-
-    return render(request, 'home/login.html', {'form': form})
 
 
-@login_required
-def logout_user(request):
-    logout(request)
-    return redirect(reverse('home:home'))
+class Logout(LoginRequiredMixin, View):
+    def get(self, request):
+        logout(request)
+        return redirect(reverse('home:home'))
 
 
 def registration_view(request):

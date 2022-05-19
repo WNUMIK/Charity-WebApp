@@ -1,8 +1,9 @@
 from django.contrib import admin
 from . import models
 
-
 # Register your models here.
+admin.site.site_header = 'Charity Donation Admin Panel'
+
 
 @admin.register(models.Account)
 class AccountAdmin(admin.ModelAdmin):
@@ -21,8 +22,8 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(models.Institution)
 class InstitutionAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'get_categories', 'type')
-    list_filter = ('name', 'type', )
-    search_fields = ('name', 'type', )
+    list_filter = ('name', 'type',)
+    search_fields = ('name', 'type',)
 
 
 @admin.register(models.Donation)
