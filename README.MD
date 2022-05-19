@@ -1,5 +1,5 @@
 
-# Charity-Donation App
+# ![](favicon-32x32.png)Charity-Donation App![](favicon-32x32.png)
 
 # Demo:
 [https://charitymw.herokuapp.com/](https://charitymw.herokuapp.com/)
