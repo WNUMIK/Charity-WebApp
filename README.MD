@@ -2,6 +2,7 @@
 [![](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)](https://www.heroku.com/)
 [![](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+
 [![GitHub Clones](https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=count&url=https://gist.githubusercontent.com/k1wsatz/28960bd0b83191249b4689b609c3745d/raw/clone.json&logo=github)](https://github.com/MShawon/github-clone-count-badge)
 # ![](static/images/favicon-32x32.png)Charity-Donation App
 
