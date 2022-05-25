@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block header %}
-    <div class="container" style="display: flex; padding: 10px; margin: 0 10px; position: center;">
+    <div class="card" style="display: flex; padding: 10px; position: relative; margin-top: 100px;" >
         <div class="personal_data" style="display: grid; padding: 10px; margin: 0 10px; border: 1px solid black;">
             <h1> Name: {{ user.name }} </h1>
             <h1> Surname: {{ user.surname }} </h1>
             <h1> Email: {{ user.email }} </h1>
         </div>
-        <table style="border: 1px solid black;">
-            <tr>
+        <table style="border: 1px solid black; text-align: center; width: 100%; height: auto; margin-right: 40px; margin-top: 100px;">
+            <tr style="border-bottom: 1px solid #ddd;">
                 <th>Obdarowana organizacja</th>
                 <th>Liczba przekazanych worków</th>
                 <th>Kategorie darów</th>
@@ -17,17 +17,17 @@
                 <th>Zabrany</th>
             </tr>
         {% for donat in donations %}
-            <tr style="padding: 10px; margin-left: 10px;">
+            <tr style="border-bottom: 1px solid #ddd;">
                 <td>{{ donat.institution }}</td>
                 <td>{{ donat.quantity }}</td>
                 <td>{% for cat in donat.categories.all %}{{ cat.name }}, {% endfor %}</td>
                 <td>{{ donat.pick_up_date }} | {{ donat.pick_up_time }}</td>
             {% if donat.is_taken == True %}
-                <td>Zabrany</td>
+                <td>&#9989;</td>
             {% else %}
             <form method="post">
                 {% csrf_token %}
-                <td><button type="submit" name="is_taken" value="{{ donat.id }}">Odebrany</button></td>
+                <td><button style="cursor: pointer; text-align: center; padding: 10px 15px; border: none; border-radius: 10px;" type="submit" name="is_taken" value="{{ donat.id }}">&#10060;/&#9989;</button></td>
             </form>
             {% endif %}
             </tr>
