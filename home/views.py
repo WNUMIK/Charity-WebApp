@@ -110,8 +110,17 @@ class DonationConfirmation(LoginRequiredMixin, View):
 class UserView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
-        donations = Donation.objects.filter(user=request.user).order_by('pick_up_date', 'pick_up_time')
+        donations = Donation.objects.filter(user=request.user).order_by('is_taken', 'pick_up_date', 'pick_up_time',)
+
         return render(request, 'home/user.html', {'user': user, 'donations': donations})
+
+    def post(self, request):
+        taken = request.POST.get('is_taken')
+        donation = Donation.objects.get(id=taken)
+        if not donation.is_taken:
+            donation.is_taken = True
+            donation.save()
+        return redirect('home:profile')
 
 
 class AdminView(LoginRequiredMixin, View):
