@@ -14,7 +14,7 @@
                 <th>Liczba przekazanych worków</th>
                 <th>Kategorie darów</th>
                 <th>Termin odbioru</th>
-                <th>Zabrany/Niezabrany</th>
+                <th>Zabrany</th>
             </tr>
         {% for donat in donations %}
             <tr style="padding: 10px; margin-left: 10px;">
@@ -22,7 +22,14 @@
                 <td>{{ donat.quantity }}</td>
                 <td>{% for cat in donat.categories.all %}{{ cat.name }}, {% endfor %}</td>
                 <td>{{ donat.pick_up_date }} | {{ donat.pick_up_time }}</td>
-                <td><label for="taken"></label><input type="checkbox" id="taken" name="taken" value="{{ donat.is_taken }}"></td>
+            {% if donat.is_taken == True %}
+                <td>Zabrany</td>
+            {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <td><button type="submit" name="is_taken" value="{{ donat.id }}">Odebrany</button></td>
+            </form>
+            {% endif %}
             </tr>
         {% endfor %}
         </table>
