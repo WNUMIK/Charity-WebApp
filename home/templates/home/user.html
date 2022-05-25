@@ -2,22 +2,31 @@
 {% load static %}
 
 {% block header %}
-    <div class="container">
-        <div class="slogan--item">
-            <h1> Name: {{ user.name }}</h1>
-            <h1> Surname: {{ user.surname }}</h1>
-            <h1> Email: {{ user.email }}</h1>
+    <div class="container" style="display: flex; padding: 10px; margin: 0 10px; position: center;">
+        <div class="personal_data" style="display: grid; padding: 10px; margin: 0 10px; border: 1px solid black;">
+            <h1> Name: {{ user.name }} </h1>
+            <h1> Surname: {{ user.surname }} </h1>
+            <h1> Email: {{ user.email }} </h1>
         </div>
+        <table style="border: 1px solid black;">
+            <tr>
+                <th>Obdarowana organizacja</th>
+                <th>Liczba przekazanych worków</th>
+                <th>Kategorie darów</th>
+                <th>Termin odbioru</th>
+                <th>Zabrany/Niezabrany</th>
+            </tr>
         {% for donat in donations %}
-        <div class="dropdown">
-            <button class="title">Obdarowana organizacja: {{ donat.institution }}</button>
-                <div class="dropdown-content">
-                    <h1>Liczba przekazanych worków: {{ donat.quantity }}</h1>
-                    <h1>Kategorie darów: {% for cat in donat.categories.all %}{{ cat.name }}, {% endfor %}</h1>
-                    <h1>Termin odbioru: {{ donat.pick_up_date }} o godzinie {{ donat.pick_up_time }}</h1>
-                </div>
-                </div>
-            {% endfor %}
+            <tr style="padding: 10px; margin-left: 10px;">
+                <td>{{ donat.institution }}</td>
+                <td>{{ donat.quantity }}</td>
+                <td>{% for cat in donat.categories.all %}{{ cat.name }}, {% endfor %}</td>
+                <td>{{ donat.pick_up_date }} | {{ donat.pick_up_time }}</td>
+                <td><label for="taken"></label><input type="checkbox" id="taken" name="taken" value="{{ donat.is_taken }}"></td>
+            </tr>
+        {% endfor %}
+        </table>
+
 
     </div>
 {% endblock %}

@@ -6,3 +6,6 @@
 env/.env
 
 staticfiles
+templates/EXAMPLES
+templates/registration
+
