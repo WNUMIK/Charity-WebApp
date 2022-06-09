@@ -9,18 +9,22 @@
 # Demo:
 [https://charitymw.herokuapp.com/](https://charitymw.herokuapp.com/)
 
-## Skąd pomysł na projekt
+## APP
 
-- Użytkownik ma w domu rzeczy, których chce się pozbyć, ale nie wie jak.
-- Jest wiele dostępnych rozwiązań, ale wiele z nich wymaga dodatkowego wysiłku lub nie ma do nich zaufania. W zweryfikowane miejsca trzeba pojechać, a nie ma na to czasu/ nie ma jak tam pojechać, a kontenery pod domem lub lokalne zbiórki są niezweryfikowane i nie wiadomo czy te rzeczy faktycznie trafią do potrzebujących.
+Fronted was made by CodersLab.
 
-## Co zapewnia aplikacja
+## Idea
 
-- Konto administratora z panelem do zarządzania aplikacją
-- Możliwość rejestrowania się użytkowników i przekazywania darów poprzez formularz, dostępny jedynie dla zalogowanych użytkowników
-- Dynamiczny spis instytucji z bazy danych, przedstawiony na stronie tytułowej
-- Dynamiczne filtrowanie instytucji na podstawie wyboru kategorii
-- Indywidualne statystyki użytkownika 
+- User has miscellaneous things in home which he wants to donate
+- There are available solutions but many of them require additional effort or are not veryfied.
+
+## Pros of this App
+
+- Admin Panel with CRUD options
+- Possibility to register and make a donation through form
+- Dynamic list of institutions and quantity of donated things
+- Dynamic filtering of institutions on based on choosen category
+- Individual profile with statistics and possibility to mark donation as taken
 
 ## Installation
 
